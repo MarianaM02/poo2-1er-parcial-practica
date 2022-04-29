@@ -21,7 +21,7 @@ Un robot móvil se desplaza en una cuadrícula de N por M cuadraditos sin salirs
 
   | IN                | OUT (esperado) |
   |-------------------|----------------|
-  | 1 4 N 10 10<br>A4 | 4 1            |
+  | 1 4 N 10 10<br>A4 | 8 1            |
 ---
 - **Nombre:** caso_03_entrada_No_tiene_comandos
 - **Descripción:** Busca detectar un error cuando el robot no reciba comandos.
