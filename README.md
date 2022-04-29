@@ -14,20 +14,20 @@ Un robot móvil se desplaza en una cuadrícula de N por M cuadraditos sin salirs
 
   | IN                                                          | OUT (esperado) |
   |-------------------------------------------------------------|----------------|
-  | 5 5 S 15 20<br>A4A5A2R3A1R9A2R2A6R9A2A3A8A7R2A6R1A7R3A5R1A5 | 2 4            |
+  | 5 5 S 15 20<br>A4A5A2R3A1R9A2R2A6R9A2A3A8A7R2A6R1A7R3A5R1A5 | 4 2            |
 ---
 - **Nombre:** caso_02_entrada_un_comando
 - **Descripción:** Busca detectar un error cuando se tiene un único valor de entrada.
 
   | IN                | OUT (esperado) |
   |-------------------|----------------|
-  | 1 4 N 10 10<br>A4 | 8 1            |
+  | 1 4 N 10 10<br>A4 | 1 8            |
 ---
 - **Nombre:** caso_03_entrada_No_tiene_comandos
 - **Descripción:** Busca detectar un error cuando el robot no reciba comandos.
   | IN             | OUT (esperado) |
   |----------------|----------------|
-  | 5 2 E 10 20<br> | 2 5            |
+  | 5 2 E 10 20<br> | 5 2            |
 ---
 - **Nombre:** caso_04_entrada_supera_tamaño_cuadricula
 - **Descripción:** Busca detectar un error cuando se ingresa un tamaño de cuadricula más grande que 100.
@@ -48,7 +48,68 @@ Un robot móvil se desplaza en una cuadrícula de N por M cuadraditos sin salirs
 
   | IN                | OUT (esperado) |
   |-------------------|----------------|
-  | 5 10 O 12 12 <br>A4A5A2R3A1R9A2R2A6 | 1 7            |
----
+  | 5 10 O 12 12 <br>A4A5A2R3A1R9A2R2A6 | 7 1            |
 
+## Diagrama de Clases
+```mermaid
+classDiagram
+  JuegoApp --> ManejadorArchivos
+  JuegoApp "1" *-- "1" Robot
+  JuegoApp "1" *-- "1" Cuadricula
+  JuegoApp "1" *-- "*" Instruccion
+
+  class JuegoApp {
+    -robot : Robot
+    -cuadricula : Cuadricula
+    -instrucciones : LinkedList<Instruccion>
+    -salidaArchivo : String
+    +JuegoApp(ManejadorArchivos)
+    -parsearInicialización(String)
+    -parsearIntrucciones(String)
+    -ejecutarInstrucciones()
+    -obtenerPosicionActualRobot()
+  }
+
+  class ManejadorArchivos {
+    ruta : String
+    archivoIn : String
+    archivoOut : String
+    ManejadorArchivos(String, String)
+    leerArchivo()
+    escribirArchivo(String)
+  }
+
+  class Robot {
+    posicionEnX : int
+    posicionEnY : int
+    direccion : Direccion
+    Robot(int, int, String)
+    getPosicionEnX()
+    getPosicionEnY()
+    getDireccion()
+    avanzar(int, Cuadricula)
+    rotar(int)
+  }
+
+  class Cuadricula {
+    MAX : int
+    MIN : int
+    N : int
+    M : int
+    Cuadricula(int, int)
+    getN()
+    getM()
+    superaBordeEnX(int)
+    superaBordeEnY(int)
+  }
+
+  class Instruccion {
+    tipoComando : char
+    numero : int
+    Instruccion(char, int)
+    getTipoComando()
+    getNumero()
+    toString()
+  }
+```
 
