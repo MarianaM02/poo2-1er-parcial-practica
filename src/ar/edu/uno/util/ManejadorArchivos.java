@@ -1,10 +1,14 @@
 package ar.edu.uno.util;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
+
+import ar.edu.uno.excepciones.DatosInsuficientesException;
 
 public class ManejadorArchivos {
 	private final String ruta = "./archivos/";
@@ -17,7 +21,9 @@ public class ManejadorArchivos {
 		this.archivoOut = archivoOut;
 	}
 
-	public String[] leerArchivo() {
+	public String[] leerArchivo(){
+		System.out.println(archivoIn);
+		System.out.println("------------------");
 		Scanner sc;
 		int cantLineas = 2;
 		String[] array = new String[cantLineas];
@@ -25,13 +31,17 @@ public class ManejadorArchivos {
 			sc = new Scanner(new File(ruta + archivoIn));
 
 			array[0] = sc.nextLine();
-			array[1] = sc.nextLine();
-
+			if (sc.hasNext()) {
+				array[1] = sc.nextLine();
+			}
 			sc.close();
 
-		} catch (Exception e) {
-			System.err.println(e.getMessage());
-			e.printStackTrace();
+		} catch (IndexOutOfBoundsException e) {
+			throw new DatosInsuficientesException();
+		} catch (FileNotFoundException e) {
+			throw new DatosInsuficientesException();
+		} catch (NoSuchElementException e) {
+			throw new DatosInsuficientesException();
 		}
 
 		return array;

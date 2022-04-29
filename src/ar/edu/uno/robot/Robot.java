@@ -1,4 +1,4 @@
-package ar.edu.uno.app;
+package ar.edu.uno.robot;
 
 public class Robot {
 
@@ -37,8 +37,9 @@ public class Robot {
 				posicionNueva = this.posicionEnY + movimiento;
 				// verifico si la posicion nueva es valida en el tablero
 				if(cuadricula.superaBordeEnY(posicionNueva)) {
+					System.out.println("El robot chocó contra el borde");
 					// si esta fuera del tablero, establezco como nueva posicion el borde
-					posicionNueva = cuadricula.getM();
+					posicionNueva = (posicionNueva<1) ? 1 : cuadricula.getM();
 				}
 				// setear nueva posicion
 				this.posicionEnY = posicionNueva;
@@ -50,8 +51,9 @@ public class Robot {
 				posicionNueva = this.posicionEnX + movimiento;
 				// verifico si la posicion nueva es valida en el tablero
 				if(cuadricula.superaBordeEnX(posicionNueva)) {
+					System.out.println("El robot chocó contra el borde");
 					// si esta fuera del tablero, establezco como nueva posicion el borde
-					posicionNueva = cuadricula.getN();
+					posicionNueva = (posicionNueva<1) ? 1 : cuadricula.getN();
 				}
 				// setear nueva posicion
 				this.posicionEnX = posicionNueva;

@@ -1,4 +1,4 @@
-package ar.edu.uno.app;
+package ar.edu.uno.robot;
 
 public enum Direccion {
 	N("Norte", 1), E("Este", 1), S("Sur", -1), O("Oeste", -1);
@@ -17,7 +17,7 @@ public enum Direccion {
 		return direcciones[nuevaPos];
 	}
 
-	public String getDireccion() {
+	public String getNombre() {
 		return nombre;
 	}
 	

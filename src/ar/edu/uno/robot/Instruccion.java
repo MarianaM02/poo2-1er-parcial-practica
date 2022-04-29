@@ -1,4 +1,4 @@
-package ar.edu.uno.app;
+package ar.edu.uno.robot;
 
 public class Instruccion {
 
@@ -16,6 +16,11 @@ public class Instruccion {
 
 	public int getNumero() {
 		return numero;
+	}
+
+	@Override
+	public String toString() {
+		return "[" + tipoComando + " -> " + numero + "]";
 	}
 
 }
