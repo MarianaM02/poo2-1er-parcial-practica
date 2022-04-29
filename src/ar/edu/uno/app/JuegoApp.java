@@ -11,18 +11,18 @@ public class JuegoApp {
 	private LinkedList<Instruccion> instrucciones;
 
 	public JuegoApp(String inicializacionStr, String instruccionesStr) {
-		String[] datosInit = parseoInicialización(inicializacionStr);
+		String[] datosInit = parsearInicialización(inicializacionStr);
 
 		this.robot = new Robot(Integer.parseInt(datosInit[0]), Integer.parseInt(datosInit[1]), datosInit[2]);
 		this.cuadricula = new Cuadricula(Integer.parseInt(datosInit[3]), Integer.parseInt(datosInit[4]));
-		this.instrucciones = parseoIntrucciones(instruccionesStr);
+		this.instrucciones = parsearIntrucciones(instruccionesStr);
 	}
 
-	private String[] parseoInicialización(String inicializacionStr) {
+	private String[] parsearInicialización(String inicializacionStr) {
 		return inicializacionStr.split(" ");
 	}
 
-	private LinkedList<Instruccion> parseoIntrucciones(String instruccionesStr) {
+	private LinkedList<Instruccion> parsearIntrucciones(String instruccionesStr) {
 		if (instruccionesStr.length() > 250) {
 			throw new RuntimeException("Demasiadas Instrucciones! (Máx 250 characteres)");
 		}
@@ -44,26 +44,7 @@ public class JuegoApp {
 				this.robot.rotar(instruccion.getNumero());
 				break;
 			case 'A':
-				// TODO validacion de si se puede avanzar (si no se cae del tablero el robot)
-				int movimiento = instruccion.getNumero() * robot.getDireccion().getSentido();
-				int posicionNueva = movimiento;
-				switch (robot.getDireccion()) {
-					case N:
-					case S:
-						posicionNueva += robot.getPosicionEnY();
-						if(cuadricula.superaBordeEnY(posicionNueva)) {
-							posicionNueva = cuadricula.getM();
-						}
-						break;
-					case E:
-					case O:
-						posicionNueva += robot.getPosicionEnX();
-						if(cuadricula.superaBordeEnX(posicionNueva)) {
-							posicionNueva = cuadricula.getN();
-						}
-						break;
-				}
-				robot.avanzar(posicionNueva);
+				robot.avanzar(instruccion.getNumero(), this.cuadricula);
 				break;
 			default:
 				throw new RuntimeException(

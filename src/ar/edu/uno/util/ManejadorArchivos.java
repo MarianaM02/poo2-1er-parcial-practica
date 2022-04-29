@@ -19,7 +19,8 @@ public class ManejadorArchivos {
 
 	public String[] leerArchivo() {
 		Scanner sc;
-		String[] array = new String[2];
+		int cantLineas = 2;
+		String[] array = new String[cantLineas];
 		try {
 			sc = new Scanner(new File(ruta + archivoIn));
 
