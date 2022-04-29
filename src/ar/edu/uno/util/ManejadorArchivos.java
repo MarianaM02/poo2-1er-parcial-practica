@@ -17,41 +17,37 @@ public class ManejadorArchivos {
 		this.archivoOut = archivoOut;
 	}
 
-	public String leerArchivo() {
+	public String[] leerArchivo() {
 		Scanner sc;
-		String linea = "";
-		
+		String[] array = new String[2];
 		try {
 			sc = new Scanner(new File(ruta + archivoIn));
 
-			while (sc.hasNext()) {
-				linea += sc.nextLine() + "\n";
-			}
+			array[0] = sc.nextLine();
+			array[1] = sc.nextLine();
 
 			sc.close();
-			
+
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 			e.printStackTrace();
 		}
-		
-		return linea;
+
+		return array;
 
 	}
 
-	public void escribirArchivo(String[] data) {
+	public void escribirArchivo(String salidaStr) {
 		FileWriter archivo;
 		PrintWriter salida;
 		try {
 			archivo = new FileWriter(ruta + archivoOut);
 			salida = new PrintWriter(archivo);
 
-			for (String s : data) {
-				salida.println(s);
-			}
-			
+			salida.println(salidaStr);
+
 			salida.close();
-			
+
 		} catch (IOException e) {
 			System.err.println(e.getMessage());
 			e.printStackTrace();
