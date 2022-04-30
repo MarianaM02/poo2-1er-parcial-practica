@@ -1,4 +1,4 @@
-package ar.edu.uno.util;
+package ar.edu.uno.robot;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,6 +10,9 @@ import java.util.Scanner;
 
 import ar.edu.uno.excepciones.DatosInsuficientesException;
 
+/**
+ * Clase encargada del manejo de lectura y escritura de archivos 
+ */
 public class ManejadorArchivos {
 	private final String ruta = "./archivos/";
 	private String archivoIn;
@@ -22,8 +25,6 @@ public class ManejadorArchivos {
 	}
 
 	public String[] leerArchivo(){
-		System.out.println(archivoIn);
-		System.out.println("------------------");
 		Scanner sc;
 		int cantLineas = 2;
 		String[] array = new String[cantLineas];

@@ -4,15 +4,23 @@ import java.util.LinkedList;
 
 import ar.edu.uno.excepciones.DatoNoValidoException;
 import ar.edu.uno.excepciones.DatosInsuficientesException;
-import ar.edu.uno.util.ManejadorArchivos;
 
+/**
+ * Esta clase se encarga de ejecutar toda la lógica del problema al instanciarse
+ *
+ */
 public class JuegoApp {
-
 	private Robot robot;
 	private Cuadricula cuadricula;
 	private LinkedList<Instruccion> instrucciones;
 	private String salidaArchivo;
 
+	/**
+	 * Constructor de JuegoApp. Inicializa atributos y ejecuta las instrucciones con
+	 * el input obtenido por parametro y luego genera la salida.
+	 * 
+	 * @param manejador de archivos que controla la entrada y salida
+	 */
 	public JuegoApp(ManejadorArchivos ma) {
 		// Se lee el archivo de input
 		try {
@@ -20,7 +28,6 @@ public class JuegoApp {
 			parsearInicialización(datosIn[0]);
 			parsearIntrucciones(datosIn[1]);
 
-			
 			// Se procesan las instrucciones de mover al robot
 			ejecutarInstrucciones();
 			// Se genera la salida con la posicion del robot
@@ -31,9 +38,14 @@ public class JuegoApp {
 		} finally {
 			ma.escribirArchivo(salidaArchivo);
 		}
-
 	}
 
+	/**
+	 * Inicializa los atributos robot y cuadricula a partir del parseo de un String
+	 * pasado por parametro
+	 * 
+	 * @param inicializacionStr String con los datos de inicializacion
+	 */
 	private void parsearInicialización(String inicializacionStr) {
 		String[] datosInicializacion = inicializacionStr.split(" ");
 		try {
@@ -42,6 +54,7 @@ public class JuegoApp {
 			String s = datosInicializacion[2];
 			int n = Integer.parseInt(datosInicializacion[3]);
 			int m = Integer.parseInt(datosInicializacion[4]);
+
 			this.robot = new Robot(x, y, s);
 			this.cuadricula = new Cuadricula(n, m);
 		} catch (NumberFormatException e) {
@@ -51,11 +64,18 @@ public class JuegoApp {
 		}
 	}
 
+	/**
+	 * Inicializa el atributo instrucciones a partir del parseo de un String pasado
+	 * por parametro
+	 * 
+	 * @param instruccionesStr String con los datos de las instrucciones
+	 */
 	private void parsearIntrucciones(String instruccionesStr) {
+		int maxInstrucciones = 250;
 		this.instrucciones = new LinkedList<Instruccion>();
-		// el .in puede no tener excepciones
+		// el .in puede no tener instrucciones
 		if (instruccionesStr != null) {
-			if (instruccionesStr.length() > 250) {
+			if (instruccionesStr.length() > maxInstrucciones) {
 				throw new RuntimeException("Demasiadas Instrucciones! (Máx 250 characteres)");
 			}
 
@@ -73,31 +93,33 @@ public class JuegoApp {
 
 	}
 
-	public void ejecutarInstrucciones() {
-		System.out.println("Inicio = "+ obtenerPosicionActualRobot());
-		
+	/**
+	 * Se encarga de dar la intrucciones al robot segun el comando correspondiente
+	 */
+	private void ejecutarInstrucciones() {
 		for (Instruccion instruccion : this.instrucciones) {
-			System.out.println(instruccion);
+
 			switch (instruccion.getTipoComando()) {
 			case 'R':
-				System.out.println("Mirando al " + robot.getDireccion().getNombre());
 				this.robot.rotar(instruccion.getNumero());
-				System.out.println("Giro al " + robot.getDireccion().getNombre());
 				break;
 			case 'A':
 				robot.avanzar(instruccion.getNumero(), this.cuadricula);
-				System.out.println(obtenerPosicionActualRobot());
 				break;
 			default:
 				throw new RuntimeException(
 						"Instrucción no Válida! " + instruccion.getTipoComando() + " no es un comando válido.");
 			}
 		}
-		System.out.println("Fin = "+ obtenerPosicionActualRobot());		
 		salidaArchivo = obtenerPosicionActualRobot();
 	}
 
-	public String obtenerPosicionActualRobot() {
+	/**
+	 * Devuelve la posicion del robot como un String de formato "x y"
+	 * 
+	 * @return String con posicion x y del robot
+	 */
+	private String obtenerPosicionActualRobot() {
 		return this.robot.getPosicionEnX() + " " + this.robot.getPosicionEnY();
 	}
 
@@ -105,17 +127,11 @@ public class JuegoApp {
 	public static void main(String[] args) {
 		ManejadorArchivos manejador;
 		JuegoApp juegoApp;
-		/*
-		 * 
-		 * // Se crea una instancia de la clase encargada de los archivos ma = new
-		 * ManejadorArchivos("robot.in", "robot.out"); // Se crea la instancia del juego
-		 * segun los datos de entrada juegoApp = new JuegoApp(ma);
-		 */
 
 		// Se crea una instancia de la clase encargada de los archivos
-		manejador = new ManejadorArchivos("in/caso_01_entrada_varios_comandos.in", "out/caso_01.out");
+		manejador = new ManejadorArchivos("ROBOT.IN", "ROBOT.OUT");
 		// Se crea la instancia del juego segun los datos de entrada
 		juegoApp = new JuegoApp(manejador);
-
 	}
+
 }

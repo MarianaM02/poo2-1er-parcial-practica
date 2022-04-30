@@ -37,13 +37,13 @@ public class Robot {
 				posicionNueva = this.posicionEnY + movimiento;
 				// verifico si la posicion nueva es valida en el tablero
 				if(cuadricula.superaBordeEnY(posicionNueva)) {
-					System.out.println("El robot chocó contra el borde");
 					// si esta fuera del tablero, establezco como nueva posicion el borde
-					posicionNueva = (posicionNueva<1) ? 1 : cuadricula.getM();
+					posicionNueva = (posicionNueva < cuadricula.getMIN()) ? cuadricula.getMIN() : cuadricula.getM();
 				}
 				// setear nueva posicion
 				this.posicionEnY = posicionNueva;
 				break;
+				
 			case E:
 			case O:
 				// movimiento horizontal (en X)
@@ -51,9 +51,8 @@ public class Robot {
 				posicionNueva = this.posicionEnX + movimiento;
 				// verifico si la posicion nueva es valida en el tablero
 				if(cuadricula.superaBordeEnX(posicionNueva)) {
-					System.out.println("El robot chocó contra el borde");
 					// si esta fuera del tablero, establezco como nueva posicion el borde
-					posicionNueva = (posicionNueva<1) ? 1 : cuadricula.getN();
+					posicionNueva = (posicionNueva < cuadricula.getMIN()) ? cuadricula.getMIN() : cuadricula.getN();
 				}
 				// setear nueva posicion
 				this.posicionEnX = posicionNueva;

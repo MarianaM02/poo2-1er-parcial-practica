@@ -3,8 +3,8 @@ package ar.edu.uno.robot;
 public class Cuadricula {
 	private final int MAX = 100;
 	private final int MIN = 1;
-	private int N;
-	private int M;
+	private int n;
+	private int m;
 
 	public Cuadricula(int n, int m) {
 		if (n > MAX || m > MAX) {
@@ -13,28 +13,33 @@ public class Cuadricula {
 		if (n < MIN || m < MIN) {
 			throw new RuntimeException("No puede generarse una cuadrícula con valores menores a 1");
 		}
-		this.N = n;
-		this.M = m;
+		this.n = n;
+		this.m = m;
 	}
 
 	public int getN() {
-		return N;
+		return n;
 	}
 
 	public int getM() {
-		return M;
+
+		return m;
 	}
 
-	// TODO Validar movimiento
-	// chequear (if) si el cálculo no sobrepasa máximos (N o M segun corresponda)
-	// setear posicion nueva
+	public int getMAX() {
+		return MAX;
+	}
+	
+	public int getMIN() {
+		return MIN;
+	}
 
 	public boolean superaBordeEnX(int n) {
-		return n < 1 || n > N;
+		return n < 1 || n > this.n;
 	}
 
 	public boolean superaBordeEnY(int n) {
-		return n < 1 || n > M;
+		return n < 1 || n > this.m;
 	}
 
 }
